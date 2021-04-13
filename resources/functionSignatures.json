@@ -1,0 +1,200 @@
+{
+	"DelimitedStrings2Table": {
+		"inputs": [
+			{
+				"name": "Strings",
+				"kind": "required",
+				"type": [
+					"column",
+					"string"
+				],
+				"purpose": "分隔符字符串列"
+			},
+			{
+				"name": "FieldNames",
+				"kind": "required",
+				"type": [
+					"row",
+					"string"
+				],
+				"purpose": "从头开始按顺序排列每个字段的名称。"
+			},
+			{
+				"name": "Delimiter",
+				"kind": "required",
+				"type": [
+					"scalar",
+					"string"
+				],
+				"purpose": "分隔符，将传递给split用于分隔"
+			},
+			{
+				"name": "TimeField",
+				"kind": "ordered",
+				"type": ">=0",
+				"purpose": "时间字段在字符串中是第几个字段",
+				"default": 0
+			},
+			{
+				"name": "DatetimeFormat",
+				"kind": "ordered",
+				"type": [
+					"row",
+					"char"
+				],
+				"purpose": "日期时间格式",
+				"default": "'yyyyMMddHHmmss'"
+			}
+		],
+		"outputs": [
+			{
+				"name": "Table",
+				"type": "tabular"
+			}
+		]
+	},
+	"DivideEquallyOnDimensionsIntoCells":{
+		"inputs":[
+			{
+				"name":"Array",
+				"kind":"required",
+				"purpose":"要拆分的数组"
+			},
+			{
+				"name":"Dimensions",
+				"kind":"required",
+				"type":["vector","numeric"],
+				"purpose":"要拆分哪些维度"
+			},
+			{
+				"name":"NoDivisions",
+				"kind":"required",
+				"type":["vector","numeric"],
+				"purpose":"每个维度拆成几份，顺序与Dimensions一一对应"
+			}
+		],
+		"outputs":[
+			{
+				"name":"Array",
+				"type":"cell"
+			}
+		]
+	},
+	"IntegralSplit":{
+		"inputs":[
+			{
+				"name":"Sum",
+				"kind":"required",
+				"type":"positive",
+				"purpose":"要拆分的大整数"
+			},
+			{
+				"name":"NoSplits",
+				"kind":"required",
+				"type":"positive",
+				"purpose":"拆分的份数"
+			}
+		],
+		"outputs":[
+			{
+				"name":"Parts",
+				"type":["column","uint8"]
+			}
+		]
+	},
+	"SuperCell2Mat": {
+		"inputs": [
+			{
+				"name": "Cells",
+				"kind": "required",
+				"type": "cell",
+				"purpose": "要拼接的元胞数组"
+			}
+		]
+	},
+	"StructAggregateByFields": {
+		"inputs": [
+			{
+				"name": "AggregateFunction",
+				"kind": "required",
+				"type": [
+					"scalar",
+					"function_handle"
+				],
+				"purpose": "要执行的累积函数，必须接受一个和StructArray尺寸相同的元胞数组输入"
+			},
+			{
+				"name": "StructArray",
+				"kind": "required",
+				"type": "struct",
+				"purpose": "要累积的结构体数组"
+			}
+		],
+		"outputs": [
+			{
+				"name": "StructScalar",
+				"type": [
+					"scalar",
+					"struct"
+				]
+			}
+		]
+	},
+	"ArrayBuilder": {
+		"inputs": [
+			{
+				"name": "BuildDimension",
+				"kind": "required",
+				"type": [
+					"positive",
+					"scalar"
+				],
+				"purpose": "累加维度",
+				"default": 1
+			}
+		],
+		"outputs": [
+			{
+				"name": "obj",
+				"type": [
+					"scalar",
+					"ArrayBuilder"
+				]
+			}
+		]
+	},
+	"ArrayBuilder.Append": {
+		"inputs": [
+			{
+				"name": "obj",
+				"kind": "required",
+				"type": [
+					"scalar",
+					"ArrayBuilder"
+				]
+			},
+			{
+				"name": "New",
+				"kind": "required",
+				"purpose": "累加内容。所有累加内容在累加维度上尺寸可以不一致，但在其它维度上必须一致。"
+			}
+		]
+	},
+	"ArrayBuilder.Harvest": {
+		"inputs": [
+			{
+				"name": "obj",
+				"kind": "required",
+				"type": [
+					"scalar",
+					"ArrayBuilder"
+				]
+			}
+		],
+		"outputs": [
+			{
+				"name": "Array"
+			}
+		]
+	}
+}
