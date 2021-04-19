@@ -78,6 +78,16 @@ Sum(1,1)uint8，要拆分的大整数
 NoSplits(1,1)uint8，拆分的份数
 ## 返回值
 Parts(:,1)uint8，拆分后的小整数，其和等于大整数。如果Sum正好是NoSplits的整倍数，这些小整数相等；否则最多相差1。
+# MeanSem
+一次性高效算出数据沿维度的平均值和标准误
+## 输入参数
+Data，数据数组
+
+Dimensions，聚合维度。输出的Mean和SEM，其Dimensions维度上长度为1，其它维度上长度与Data相同。
+## 返回值
+Mean double，沿维度的平均值
+
+SEM double，沿维度的标准误
 # StructAggregateByFields
 对结构体的每个字段执行累积运算，累积结果放在一个字段相同的结构体标量中返回。
 ```MATLAB

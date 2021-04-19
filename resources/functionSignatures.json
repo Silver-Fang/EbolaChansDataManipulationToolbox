@@ -102,6 +102,32 @@
 			}
 		]
 	},
+	"MeanSem":{
+		"inputs":[
+			{
+				"name":"Data",
+				"kind":"required",
+				"type":"numeric",
+				"purpose":"数据数组"
+			},
+			{
+				"name":"Dimensions",
+				"kind":"required",
+				"type":["vector","numeric"],
+				"purpose":"聚合维度"
+			}
+		],
+		"outputs":[
+			{
+				"name":"Mean",
+				"type":"double"
+			},
+			{
+				"name":"SEM",
+				"type":"double"
+			}
+		]
+	},
 	"SuperCell2Mat": {
 		"inputs": [
 			{

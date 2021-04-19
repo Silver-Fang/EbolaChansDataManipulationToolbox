@@ -12,7 +12,7 @@ classdef ArrayBuilder<handle
 	end
 	properties(SetAccess=immutable)
 		%累加维度
-		BuildDimension(1,1)uint8
+		BuildDimension(1,1)double
 	end
 	methods
 		function obj = ArrayBuilder(BuildDimension)
