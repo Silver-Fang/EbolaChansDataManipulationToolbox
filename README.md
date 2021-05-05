@@ -1,4 +1,6 @@
-埃博拉酱的MATLAB数据操纵工具包
+埃博拉酱的MATLAB数据操纵工具包，提供一系列MATLAB内置函数所欠缺，但却常用的增强功能
+
+本项目的发布版本号遵循[语义化版本](https://semver.org/lang/zh-CN/)规范。开发者认为这是一个优秀的规范，并向每一位开发者推荐遵守此规范。
 # ArrayBuilder<handle（MATLAB类）
 数组累加器
 
@@ -78,16 +80,127 @@ Sum(1,1)uint8，要拆分的大整数
 NoSplits(1,1)uint8，拆分的份数
 ## 返回值
 Parts(:,1)uint8，拆分后的小整数，其和等于大整数。如果Sum正好是NoSplits的整倍数，这些小整数相等；否则最多相差1。
+# MainFrequency
+计算信号的主频
+
+主频是对信号做傅里叶变换以后，将各个频率加权几何平均后得到的平均频率。
+```MATLAB
+x=0.01:0.01:100;
+figure;
+hold on;
+%典型高主频信号
+YHigh=sin(x*10)*10+sin(x/10)/10;
+%典型低主频信号
+YLow=sin(x*10)/10+sin(x/10)*10;
+legend([plot(x,YHigh) plot(x,YLow)],[sprintf("主频%.2g㎐",MainFrequency(YHigh,SampleRate=100)) sprintf("主频%.2g㎐",MainFrequency(YLow,SampleRate=100))]);
+xlabel("Time (s)");
+```
+![](MainFrequency.svg)
+## 必需参数
+Signal，信号数组
+## 名称-值参数
+Dimension(1,1)，计算维度，默认长度大于1的第1个维度
+
+SampleRate(1,1)=1，采样率
+## 返回值
+Mf，计算维度上的主频。该数组尺寸在计算维度上为1，其它维度上与Signal相同。
+# MaxSubs
+返回数组的最大值以及所在的坐标。
+
+MATLAB自带的max函数只能返回多维数组最大值的线性索引。本函数一口气返回最大值以及多维坐标，方便易用
+```MATLAB
+%对于有多个最大值的数组，返回线性索引最小的那个位置的坐标：
+[Value,S1,S2]=MaxSubs([9 9 1;1 4 4;9 8 9])
+%{
+Value =
+
+     9
+
+
+S1 =
+
+     1
+
+
+S2 =
+
+     1
+%}
+```
+## 输入参数
+Data，要寻找最大值的多维数组
+## 返回值
+Value(1,1)，最大值
+
+[S1,S2, …, Sn]，最大值所在的位置中，线性索引最小的那个位置的坐标。每个返回值依次代表各维度的坐标。
 # MeanSem
-一次性高效算出数据沿维度的平均值和标准误
+一次性高效算出数据沿维度的平均值和标准误。
+
+具体算法：
+$$S=\sum x$$
+$$Mean=\frac{S}{N}$$
+$$SEM=\frac{\sqrt{\sum{x^2}-S\cdot Mean}}{N}$$
+```MATLAB
+[Mean,SEM]=MeanSem([0 6 3;8 7 6;9 7 1],1)
+%{
+Mean =
+
+    5.6667    6.6667    3.3333
+
+
+SEM =
+
+    2.3254    0.2722    1.1863
+%}
+[Mean,SEM]=MeanSem([0 6 3;8 7 6;9 7 1])
+%{
+Mean =
+
+    5.2222
+
+
+SEM =
+
+    0.9910
+%}
+```
 ## 输入参数
 Data，数据数组
 
-Dimensions，聚合维度。输出的Mean和SEM，其Dimensions维度上长度为1，其它维度上长度与Data相同。
+Dimensions，可选，聚合维度。输出的Mean和SEM，其Dimensions维度上长度为1，其它维度上长度与Data相同。默认所有维度，此时Mean和SEM为全局平均数和标准误标量。
 ## 返回值
 Mean double，沿维度的平均值
 
 SEM double，沿维度的标准误
+# MinSubs
+返回数组的最小值以及所在的坐标。
+
+MATLAB自带的min函数只能返回多维数组最小值的线性索引。本函数一口气返回最小值以及多维坐标，方便易用
+```MATLAB
+%对于有多个最小值的数组，返回线性索引最小的那个位置的坐标：
+[Value,S1,S2]=MinSubs([9 9 1;1 4 4;9 8 9])
+%{
+Value =
+
+     1
+
+
+S1 =
+
+     2
+
+
+S2 =
+
+     1
+%}
+```
+## 输入参数
+Data，要寻找最小值的多维数组
+## 返回值
+Value(1,1)，最小值
+
+[S1,S2, …, Sn]，最小值所在的位置中，线性索引最小的那个位置的坐标。每个返回值依次代表各维度的坐标。
 # StructAggregateByFields
 对结构体的每个字段执行累积运算，累积结果放在一个字段相同的结构体标量中返回。
 ```MATLAB

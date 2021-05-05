@@ -53,78 +53,173 @@
 			}
 		]
 	},
-	"DivideEquallyOnDimensionsIntoCells":{
-		"inputs":[
+	"DivideEquallyOnDimensionsIntoCells": {
+		"inputs": [
 			{
-				"name":"Array",
-				"kind":"required",
-				"purpose":"要拆分的数组"
+				"name": "Array",
+				"kind": "required",
+				"purpose": "要拆分的数组"
 			},
 			{
-				"name":"Dimensions",
-				"kind":"required",
-				"type":["vector","numeric"],
-				"purpose":"要拆分哪些维度"
+				"name": "Dimensions",
+				"kind": "required",
+				"type": [
+					"vector",
+					"numeric"
+				],
+				"purpose": "要拆分哪些维度"
 			},
 			{
-				"name":"NoDivisions",
-				"kind":"required",
-				"type":["vector","numeric"],
-				"purpose":"每个维度拆成几份，顺序与Dimensions一一对应"
+				"name": "NoDivisions",
+				"kind": "required",
+				"type": [
+					"vector",
+					"numeric"
+				],
+				"purpose": "每个维度拆成几份，顺序与Dimensions一一对应"
 			}
 		],
-		"outputs":[
+		"outputs": [
 			{
-				"name":"Array",
-				"type":"cell"
+				"name": "Array",
+				"type": "cell"
 			}
 		]
 	},
-	"IntegralSplit":{
-		"inputs":[
+	"IntegralSplit": {
+		"inputs": [
 			{
-				"name":"Sum",
-				"kind":"required",
-				"type":"positive",
-				"purpose":"要拆分的大整数"
+				"name": "Sum",
+				"kind": "required",
+				"type": "positive",
+				"purpose": "要拆分的大整数"
 			},
 			{
-				"name":"NoSplits",
-				"kind":"required",
-				"type":"positive",
-				"purpose":"拆分的份数"
+				"name": "NoSplits",
+				"kind": "required",
+				"type": "positive",
+				"purpose": "拆分的份数"
 			}
 		],
-		"outputs":[
+		"outputs": [
 			{
-				"name":"Parts",
-				"type":["column","uint8"]
+				"name": "Parts",
+				"type": [
+					"column",
+					"uint8"
+				]
 			}
 		]
 	},
-	"MeanSem":{
+	"MainFrequency":{
 		"inputs":[
 			{
-				"name":"Data",
+				"name":"Signal",
 				"kind":"required",
 				"type":"numeric",
-				"purpose":"数据数组"
+				"purpose":"信号数组"
 			},
 			{
-				"name":"Dimensions",
-				"kind":"required",
-				"type":["vector","numeric"],
-				"purpose":"聚合维度"
+				"name":"Dimension",
+				"kind":"namevalue",
+				"type":"positive",
+				"purpose":"计算维度"
+			},
+			{
+				"name":"SampleRate",
+				"kind":"namevalue",
+				"type":"positive",
+				"purpose":"采样率",
+				"default":1
 			}
 		],
 		"outputs":[
 			{
-				"name":"Mean",
-				"type":"double"
+				"name":"Mf",
+				"type":"numeric"
+			}
+		]
+	},
+	"MaxSubs": {
+		"inputs": [
+			{
+				"name": "Data",
+				"kind": "required",
+				"type": "numeric",
+				"purpose": "要寻找最大值的多维数组"
+			}
+		],
+		"outputs": [
+			{
+				"name": "Value",
+				"type": [
+					"scalar",
+					"numeric"
+				]
 			},
 			{
-				"name":"SEM",
-				"type":"double"
+				"name": "Subs",
+				"type": [
+					"positive",
+					"integer"
+				],
+				"repeating":true
+			}
+		]
+	},
+	"MeanSem": {
+		"inputs": [
+			{
+				"name": "Data",
+				"kind": "required",
+				"type": "numeric",
+				"purpose": "数据数组"
+			},
+			{
+				"name": "Dimensions",
+				"kind": "ordered",
+				"type": [
+					"vector",
+					"numeric"
+				],
+				"purpose": "聚合维度"
+			}
+		],
+		"outputs": [
+			{
+				"name": "Mean",
+				"type": "double"
+			},
+			{
+				"name": "SEM",
+				"type": "double"
+			}
+		]
+	},
+	"MinSubs": {
+		"inputs": [
+			{
+				"name": "Data",
+				"kind": "required",
+				"type": "numeric",
+				"purpose": "要寻找最小值的多维数组"
+			}
+		],
+		"outputs": [
+			{
+				"name": "Value",
+				"type": [
+					"scalar",
+					"numeric"
+				]
+			},
+			{
+				"name": "Subs",
+				"type": [
+					"positive",
+					"integer"
+				],
+				"repeating":true
 			}
 		]
 	},
