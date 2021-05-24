@@ -77,6 +77,7 @@ NoDivisions(1,:)uint8，每个维度拆成几份，顺序与Dimensions一一对�
 Array cell，拆分后的元胞数组。如果维度尺寸是拆分数的整倍数，将均等拆分；如果不整倍，则将尽可能均等，各分块尺寸最多相差1。
 # DelimitedStrings2Table
 将一列分隔符字符串的前几个字段读出为表格或时间表
+
 分隔符字符串列如下形式：
 ```
 4003.20210204.BlueBase.All.10%400V_0002.Registered.Measurements.mat
@@ -85,16 +86,39 @@ Array cell，拆分后的元胞数组。如果维度尺寸是拆分数的整倍�
 4003.20210204.GreenRef.PV.10%400V_0005.Registered.Measurements.mat
 ```
 每行一个字符串，字符串用特定的符号分割成了一系列字段。如果前几个字段有固定的意义且在所有字符串中都存在，则可以将它们读出成表。如果某个字段是时间，还可以读出成时间表。
+```MATLAB
+Strings=["4003.20210204.BlueBase.All.10%400V._0002.Registered.Measurements.mat"
+"4003.Registered.Measurements.20210204.BlueBase.PV.10%400V._0002.mat"
+"4003.20210204.Measurements.GreenRef.All.10%400V._0005.Registered.mat"
+"Measurements.4003.Registered.20210204.GreenRef.PV.10%400V._0005.mat"];
+%忽略"Registered"和"Measurements"两个无关关键词后，第2个字段始终是日期，其他字段分别具有各自的意义：
+Table=DelimitedStrings2Table(Strings,["Mouse" "Experiment" "CellGroup" "Condition" "TrialNumber"],".",TimeField=2,IgnoreKeywords=["Registered" "Measurements"])
+%{
+Table =
+
+  4×5 timetable
+
+       Time       Mouse     Experiment    CellGroup    Condition    TrialNumber
+    __________    ______    __________    _________    _________    ___________
+
+    2021-02-04    "4003"    "BlueBase"      "All"      "10%400V"      "_0002"  
+    2021-02-04    "4003"    "BlueBase"      "PV"       "10%400V"      "_0002"  
+    2021-02-04    "4003"    "GreenRef"      "All"      "10%400V"      "_0005"  
+    2021-02-04    "4003"    "GreenRef"      "PV"       "10%400V"      "_0005"  
+%}
+```
 ## 必需参数
 Strings(:,1)string，分隔符字符串列
 
-FieldNames(1,:)string，从头开始按顺序排列每个字段的名称。如果有时间字段，直接跳过，不要在FieldNames里指示，也不要留空，而是直接将后面的字段提前上来。
+FieldNames(1,:)string，从头开始按顺序排列每个字段的名称。如果有时间字段或被忽略的关键字段，直接跳过，不要在FieldNames里指示，也不要留空，而是直接将后面的字段提前上来。
 
 Delimiter(1,1)string，分隔符，将传递给split用于分隔。
-## 可选位置参数
-TimeField(1,1)uint8=0，时间字段在字符串中是第几个字段。如果设为0，则没有时间字段，返回普通表；否则返回时间表。
+## 名称-值参数
+TimeField(1,1)uint8=0，时间字段在字符串中是第几个字段，被忽略的字段不计入该序号。如果设为0，则没有时间字段，返回普通表；否则返回时间表。
 
 DatetimeFormat(1,:)char='yyyyMMddHHmmss'，日期时间格式。不支持含有分隔符的日期时间格式，时间字段字符串必须全为日期时间数字，如"20210306", "202103061723"等。如果实际的字段长度不足，将会自动截短格式字符串以匹配之。将作为datetime函数的InputFormat参数。时间字段在所有字符串之间不需要长度相同。如果TimeField为0，将忽略该参数。
+
+IgnoreKeywords(1,:)string，如果分隔出的字段正好是某些关键词，忽略它们，不会被读出为字段，也不计入位置编号。如果时间字段出现在被忽略的字段之后，每有一个忽略字段，TimeField都应当-1。
 ## 返回值
 Table(:,:)，如果TimeField为0，返回table，否则返回timetable。
 # IntegralSplit

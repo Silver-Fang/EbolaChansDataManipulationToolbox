@@ -30,20 +30,26 @@
 			},
 			{
 				"name": "TimeField",
-				"kind": "ordered",
+				"kind": "namevalue",
 				"type": ">=0",
 				"purpose": "时间字段在字符串中是第几个字段",
 				"default": 0
 			},
 			{
 				"name": "DatetimeFormat",
-				"kind": "ordered",
+				"kind": "namevalue",
 				"type": [
 					"row",
 					"char"
 				],
 				"purpose": "日期时间格式",
 				"default": "'yyyyMMddHHmmss'"
+			},
+			{
+				"name":"IgnoreKeywords",
+				"kind":"namevalue",
+				"type":["vector","string"],
+				"purpose":"如果分隔出的字段正好是某些关键词，忽略它们"
 			}
 		],
 		"outputs": [
