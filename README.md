@@ -1,6 +1,18 @@
 埃博拉酱的MATLAB数据操纵工具包，提供一系列MATLAB内置函数所欠缺，但却常用的增强功能
 
 本项目的发布版本号遵循[语义化版本](https://semver.org/lang/zh-CN/)规范。开发者认为这是一个优秀的规范，并向每一位开发者推荐遵守此规范。
+# 目录
+- [ArrayBuilder<handle（MATLAB类）](#ArrayBuilder<handle（MATLAB类）)：数组累加器
+- [CorrelationMatrixSort](#CorrelationMatrixSort)：对相关性矩阵进行排序，使得相关性高的个体尽可能彼此接近
+- [DivideEquallyOnDimensionsIntoCells](#DivideEquallyOnDimensionsIntoCells)：将一个数组沿指定多个维度尽可能均等地拆分到多个元胞中
+- [DelimitedStrings2Table](#DelimitedStrings2Table)：将一列分隔符字符串的前几个字段读出为表格或时间表
+- [IntegralSplit](#IntegralSplit)：将一个大整数拆分成尽可能相等的多个小整数之和
+- [MainFrequency](#MainFrequency)：计算信号的主频
+- [MaxSubs](#MaxSubs)：返回数组的最大值以及所在的坐标。
+- [MeanSem](#MeanSem)：一次性高效算出数据沿维度的平均值和标准误。
+- [MinSubs](#MinSubs)：返回数组的最小值以及所在的坐标。
+- [StructAggregateByFields](#StructAggregateByFields)：对结构体的每个字段执行累积运算，累积结果放在一个字段相同的结构体标量中返回。
+- [SuperCell2Mat](#SuperCell2Mat)：cell2mat的升级版
 # ArrayBuilder<handle（MATLAB类）
 数组累加器
 
@@ -56,6 +68,33 @@ Stock(1,1)uint32，当前在累加维度上的累加数
 收获累加完毕的MATLAB数组。收获后可以释放本对象，也可以继续累加。
 
 返回值：Array，累加完毕的MATLAB数组。
+# CorrelationMatrixSort
+对相关性矩阵进行排序，使得相关性高的个体尽可能彼此接近
+
+相关性矩阵是一个正方形矩阵，可由corrcoef函数得到，表征多维数据个体之间的线性相关性。相关性矩阵的主对角线上所有值均为1，表示每个个体与自身绝对相关。其它值代表编号为该值所在行和所在列的两个个体之间的相关性。相关性矩阵可以作热图，但如果相关性高的个体不能在图上相互靠近成一个群体，就难以通过肉眼从相关热图上分辨出群体。因此需要对相关矩阵进行排序，将相关性高的个体尽可能凑在一起。
+```MATLAB
+load("CorrelationMatrix.mat");
+tiledlayout("flow",TileSpacing="tight",Padding="tight");
+nexttile;
+imagesc(CorrelationMatrix);
+title("未排序");
+%未排序的相关热图，看起来眼花缭乱，很难分辨出高相关群体
+nexttile;
+[SortIndex,SortedCM]=CorrelationMatrixSort(CorrelationMatrix);
+imagesc(SortedCM);
+title("已排序");
+%排序后，高相关的群体聚集在一起，并且可以显示排序序号
+CB=colorbar;
+CB.Layout.Tile="east";
+SortIndex
+```
+![](CorrelationMatrixSort.svg)
+## 输入参数
+CM(:,:)，未排序的相关矩阵，必须是正方形
+## 返回值
+SortedIndex(:,1)double，排序编号，以个体在原矩阵中的位置为索引的排序，即SortedCM=SortedCM(SortIndex,SortIndex)。
+
+SortedCM(:,:)，排序后的矩阵
 # DivideEquallyOnDimensionsIntoCells
 将一个数组沿指定多个维度尽可能均等地拆分到多个元胞中
 ```

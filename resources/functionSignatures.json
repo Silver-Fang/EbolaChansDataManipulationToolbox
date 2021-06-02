@@ -1,4 +1,24 @@
 {
+	"CorrelationMatrixSort":{
+		"inputs":[
+			{
+				"name":"CM",
+				"kind":"required",
+				"type":["square","numeric"],
+				"purpose":"未排序的相关矩阵"
+			}
+		],
+		"outputs":[
+			{
+				"name":"SortedIndex",
+				"type":["column","double"]
+			},
+			{
+				"name":"SortedCM",
+				"type":["square","numeric"]
+			}
+		]
+	},
 	"DelimitedStrings2Table": {
 		"inputs": [
 			{
