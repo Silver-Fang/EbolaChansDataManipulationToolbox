@@ -1,21 +1,30 @@
 {
-	"CorrelationMatrixSort":{
-		"inputs":[
+	"CorrelationMatrixSort": {
+		"inputs": [
 			{
-				"name":"CM",
-				"kind":"required",
-				"type":["square","numeric"],
-				"purpose":"未排序的相关矩阵"
+				"name": "CM",
+				"kind": "required",
+				"type": [
+					"square",
+					"numeric"
+				],
+				"purpose": "未排序的相关矩阵"
 			}
 		],
-		"outputs":[
+		"outputs": [
 			{
-				"name":"SortedIndex",
-				"type":["column","double"]
+				"name": "SortedIndex",
+				"type": [
+					"column",
+					"double"
+				]
 			},
 			{
-				"name":"SortedCM",
-				"type":["square","numeric"]
+				"name": "SortedCM",
+				"type": [
+					"square",
+					"numeric"
+				]
 			}
 		]
 	},
@@ -66,10 +75,13 @@
 				"default": "'yyyyMMddHHmmss'"
 			},
 			{
-				"name":"IgnoreKeywords",
-				"kind":"namevalue",
-				"type":["vector","string"],
-				"purpose":"如果分隔出的字段正好是某些关键词，忽略它们"
+				"name": "IgnoreKeywords",
+				"kind": "namevalue",
+				"type": [
+					"vector",
+					"string"
+				],
+				"purpose": "如果分隔出的字段正好是某些关键词，忽略它们"
 			}
 		],
 		"outputs": [
@@ -137,32 +149,32 @@
 			}
 		]
 	},
-	"MainFrequency":{
-		"inputs":[
+	"MainFrequency": {
+		"inputs": [
 			{
-				"name":"Signal",
-				"kind":"required",
-				"type":"numeric",
-				"purpose":"信号数组"
+				"name": "Signal",
+				"kind": "required",
+				"type": "numeric",
+				"purpose": "信号数组"
 			},
 			{
-				"name":"Dimension",
-				"kind":"namevalue",
-				"type":"positive",
-				"purpose":"计算维度"
+				"name": "Dimension",
+				"kind": "namevalue",
+				"type": "positive",
+				"purpose": "计算维度"
 			},
 			{
-				"name":"SampleRate",
-				"kind":"namevalue",
-				"type":"positive",
-				"purpose":"采样率",
-				"default":1
+				"name": "SampleRate",
+				"kind": "namevalue",
+				"type": "positive",
+				"purpose": "采样率",
+				"default": 1
 			}
 		],
-		"outputs":[
+		"outputs": [
 			{
-				"name":"Mf",
-				"type":"numeric"
+				"name": "Mf",
+				"type": "numeric"
 			}
 		]
 	},
@@ -189,7 +201,7 @@
 					"positive",
 					"integer"
 				],
-				"repeating":true
+				"repeating": true
 			}
 		]
 	},
@@ -245,7 +257,7 @@
 					"positive",
 					"integer"
 				],
-				"repeating":true
+				"repeating": true
 			}
 		]
 	},
@@ -341,6 +353,18 @@
 		"outputs": [
 			{
 				"name": "Array"
+			}
+		]
+	},
+	"ArrayBuilder.Clear": {
+		"inputs": [
+			{
+				"name": "obj",
+				"kind": "required",
+				"type": [
+					"scalar",
+					"ArrayBuilder"
+				]
 			}
 		]
 	}
