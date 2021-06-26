@@ -4,8 +4,6 @@ classdef ArrayBuilder<handle
 	properties(Access=private)
 		Storage(:,1)cell
 		Capacity(1,1)uint32=0
-	end
-	properties(SetAccess=private)
 		%当前在累加维度上的累加数
 		Stock(1,1)uint32=0
 	end
@@ -26,13 +24,16 @@ classdef ArrayBuilder<handle
 			obj.Stock=obj.Stock+1;
 			if obj.Capacity<obj.Stock
 				obj.Capacity=obj.Stock*2;
-				obj.Storage(obj.Capacity)={};
+				obj.Storage(obj.Capacity)=cell(1,1);
 			end
 			obj.Storage{obj.Stock}=New;
 		end
 		function Array=Harvest(obj)
 			%收获累加完毕的MATLAB数组。收获后可以释放本对象，也可以继续累加。
 			Array=cat(obj.BuildDimension,obj.Storage{1:obj.Stock});
+			obj.Storage={Array};
+			obj.Stock=1;
+			obj.Capacity=1;
 		end
 		function Clear(obj)
 			obj.Stock=0;
