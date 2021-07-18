@@ -1,5 +1,5 @@
 {
-	"CorrelationMatrixSort": {
+	"EbolaChan.DataManipulation.CorrelationMatrixSort": {
 		"inputs": [
 			{
 				"name": "CM",
@@ -28,7 +28,7 @@
 			}
 		]
 	},
-	"DelimitedStrings2Table": {
+	"EbolaChan.DataManipulation.DelimitedStrings2Table": {
 		"inputs": [
 			{
 				"name": "Strings",
@@ -91,7 +91,7 @@
 			}
 		]
 	},
-	"DivideEquallyOnDimensionsIntoCells": {
+	"EbolaChan.DataManipulation.DivideEquallyOnDimensionsIntoCells": {
 		"inputs": [
 			{
 				"name": "Array",
@@ -124,7 +124,7 @@
 			}
 		]
 	},
-	"IntegralSplit": {
+	"EbolaChan.DataManipulation.IntegralSplit": {
 		"inputs": [
 			{
 				"name": "Sum",
@@ -149,7 +149,7 @@
 			}
 		]
 	},
-	"MainFrequency": {
+	"EbolaChan.DataManipulation.MainFrequency": {
 		"inputs": [
 			{
 				"name": "Signal",
@@ -178,7 +178,7 @@
 			}
 		]
 	},
-	"MaxSubs": {
+	"EbolaChan.DataManipulation.MaxSubs": {
 		"inputs": [
 			{
 				"name": "Data",
@@ -205,7 +205,7 @@
 			}
 		]
 	},
-	"MeanSem": {
+	"EbolaChan.DataManipulation.MeanSem": {
 		"inputs": [
 			{
 				"name": "Data",
@@ -234,7 +234,7 @@
 			}
 		]
 	},
-	"MinSubs": {
+	"EbolaChan.DataManipulation.MinSubs": {
 		"inputs": [
 			{
 				"name": "Data",
@@ -261,7 +261,7 @@
 			}
 		]
 	},
-	"SuperCell2Mat": {
+	"EbolaChan.DataManipulation.SuperCell2Mat": {
 		"inputs": [
 			{
 				"name": "Cells",
@@ -271,7 +271,7 @@
 			}
 		]
 	},
-	"StructAggregateByFields": {
+	"EbolaChan.DataManipulation.StructAggregateByFields": {
 		"inputs": [
 			{
 				"name": "AggregateFunction",
@@ -299,7 +299,7 @@
 			}
 		]
 	},
-	"ArrayBuilder": {
+	"EbolaChan.DataManipulation.ArrayBuilder": {
 		"inputs": [
 			{
 				"name": "BuildDimension",
@@ -322,7 +322,7 @@
 			}
 		]
 	},
-	"ArrayBuilder.Append": {
+	"EbolaChan.DataManipulation.ArrayBuilder.Append": {
 		"inputs": [
 			{
 				"name": "obj",
@@ -339,7 +339,7 @@
 			}
 		]
 	},
-	"ArrayBuilder.Harvest": {
+	"EbolaChan.DataManipulation.ArrayBuilder.Harvest": {
 		"inputs": [
 			{
 				"name": "obj",
@@ -356,7 +356,7 @@
 			}
 		]
 	},
-	"ArrayBuilder.Clear": {
+	"EbolaChan.DataManipulation.ArrayBuilder.Clear": {
 		"inputs": [
 			{
 				"name": "obj",
