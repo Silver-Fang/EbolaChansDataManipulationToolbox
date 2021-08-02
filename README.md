@@ -10,6 +10,7 @@ import EbolaChan.DataManipulation.*;
 - [CorrelationMatrixSort](#CorrelationMatrixSort)：对相关性矩阵进行排序，使得相关性高的个体尽可能彼此接近
 - [DivideEquallyOnDimensionsIntoCells](#DivideEquallyOnDimensionsIntoCells)：将一个数组沿指定多个维度尽可能均等地拆分到多个元胞中
 - [DelimitedStrings2Table](#DelimitedStrings2Table)：将一列分隔符字符串的前几个字段读出为表格或时间表
+- [EstimateMemoryCapacity](#EstimateMemoryCapacity)：评估当前空闲内存能存放多少份样本数组
 - [IntegralSplit](#IntegralSplit)：将一个大整数拆分成尽可能相等的多个小整数之和
 - [MainFrequency](#MainFrequency)：计算信号的主频
 - [MaxSubs](#MaxSubs)：返回数组的最大值以及所在的坐标。
@@ -164,6 +165,16 @@ DatetimeFormat(1,:)char='yyyyMMddHHmmss'，日期时间格式。不支持含有�
 IgnoreKeywords(1,:)string，如果分隔出的字段正好是某些关键词，忽略它们，不会被读出为字段，也不计入位置编号。如果时间字段出现在被忽略的字段之后，每有一个忽略字段，TimeField都应当-1。
 ## 返回值
 Table(:,:)，如果TimeField为0，返回table，否则返回timetable。
+# EstimateMemoryCapacity
+评估当前空闲内存能存放多少份样本数组
+
+处理文件时，出于性能考虑，总是希望能尽可能将文件一口气全部读进内存，计算完毕后再一口气写出，因为磁盘总是顺序读写快于随机读写。但是文件较大时，有限的内存只能支持分块读入、写出，这时就需要考虑每个分块多大的问题。
+
+大文件通常可以拆分成单次读取的最小数据单元，称为数据片。例如对于视频，一帧就是一个数据片。本函数可以取得当前系统空闲内存，计算当前内存可以承载多少个数据片，以便帮助决策分块尺寸。
+
+输入参数：Sample，实数数组，一个数据片样例
+
+输出参数：Capacity(1,1)double，当前内存可容纳多少个数据片
 # IntegralSplit
 将一个大整数拆分成尽可能相等的多个小整数之和
 ```

@@ -124,6 +124,25 @@
 			}
 		]
 	},
+	"EbolaChan.DataManipulation.EstimateMemoryCapacity": {
+		"inputs": [
+			{
+				"name": "Sample",
+				"kind": "required",
+				"type": "real",
+				"purpose": "一个数据片样例"
+			}
+		],
+		"outputs": [
+			{
+				"name": "Capacity",
+				"type": [
+					"scalar",
+					"double"
+				]
+			}
+		]
+	},
 	"EbolaChan.DataManipulation.IntegralSplit": {
 		"inputs": [
 			{
